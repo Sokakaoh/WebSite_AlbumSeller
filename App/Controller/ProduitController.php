@@ -42,10 +42,10 @@ class ProduitController implements ControllerProviderInterface
 
     public function validFormAdd(Application $app, Request $req) {
        // var_dump($app['request']->attributes);
-        if (isset($_POST['nom']) && isset($_POST['typeProduit_id']) and isset($_POST['nom']) and isset($_POST['photo'])) {
+        if (isset($_POST['nom']) && isset($_POST['typeAlbum_id']) and isset($_POST['nom']) and isset($_POST['photo'])) {
             $donnees = [
                 'nom' => htmlspecialchars($_POST['nom']),                    // echapper les entrées
-                'typeProduit_id' => htmlspecialchars($app['request']->get('typeProduit_id')),
+                'typeAlbum_id' => htmlspecialchars($app['request']->get('typeAlbum_id')),
                 'prix' => htmlspecialchars($req->get('prix')),
                 'photo' => $app->escape($req->get('photo'))  //$req->query->get('photo')
             ];

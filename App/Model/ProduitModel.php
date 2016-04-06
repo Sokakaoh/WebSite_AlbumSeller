@@ -22,8 +22,8 @@ class ProduitModel {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
             ->select('p.id', 't.libelle', 'p.nom', 'p.prix', 'p.photo')
-            ->from('produits', 'p')
-            ->innerJoin('p', 'typeProduits', 't', 'p.typeProduit_id=t.id')
+            ->from('album', 'p')
+            ->innerJoin('p', 'typeAlbum', 't', 'p.typeAlbum_id=t.id')
             ->addOrderBy('p.nom', 'ASC');
         return $queryBuilder->execute()->fetchAll();
 
@@ -31,15 +31,15 @@ class ProduitModel {
 
     public function insertProduit($donnees) {
         $queryBuilder = new QueryBuilder($this->db);
-        $queryBuilder->insert('produits')
+        $queryBuilder->insert('album')
             ->values([
                 'nom' => '?',
-                'typeProduit_id' => '?',
+                'typeAlbum_id' => '?',
                 'prix' => '?',
                 'photo' => '?'
             ])
             ->setParameter(0, $donnees['nom'])
-            ->setParameter(1, $donnees['typeProduit_id'])
+            ->setParameter(1, $donnees['typeAlbum_id'])
             ->setParameter(2, $donnees['prix'])
             ->setParameter(3, $donnees['photo'])
         ;
@@ -49,8 +49,8 @@ class ProduitModel {
     function getProduit($id) {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
-            ->select('id', 'typeProduit_id', 'nom', 'prix', 'photo')
-            ->from('produits')
+            ->select('id', 'typeAlbum_id', 'nom', 'prix', 'photo')
+            ->from('album')
             ->where('id= :id')
             ->setParameter('id', $id);
         return $queryBuilder->execute()->fetch();
@@ -59,14 +59,14 @@ class ProduitModel {
     public function updateProduit($donnees) {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
-            ->update('produits')
+            ->update('album')
             ->set('nom', '?')
-            ->set('typeProduit_id','?')
+            ->set('typeAlbum_id','?')
             ->set('prix','?')
             ->set('photo','?')
             ->where('id= ?')
             ->setParameter(0, $donnees['nom'])
-            ->setParameter(1, $donnees['typeProduit_id'])
+            ->setParameter(1, $donnees['typeAlbum_id'])
             ->setParameter(2, $donnees['prix'])
             ->setParameter(3, $donnees['photo'])
             ->setParameter(4, $donnees['id']);
@@ -76,7 +76,7 @@ class ProduitModel {
     public function deleteProduit($id) {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
-            ->delete('produits')
+            ->delete('album')
             ->where('id = :id')
             ->setParameter('id',(int)$id)
         ;
